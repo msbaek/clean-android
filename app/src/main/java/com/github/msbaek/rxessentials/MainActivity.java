@@ -12,7 +12,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHolder.OpenProfileListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHolder.OpenProfileListener {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipe;
     private SoAdapter mAdapter;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
         });
         mRecyclerView.setAdapter(mAdapter);
 
-        mSwipe.setOnRefreshListener(this);
+        mSwipe.setOnRefreshListener(this::onRefresh);
 
         if(savedInstanceState == null)
             refreshList(1);
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
         startActivity(i);
     }
 
-    @Override
     public void onRefresh() {
         refreshList(1);
     }
