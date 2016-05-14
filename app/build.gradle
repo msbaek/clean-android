@@ -1,10 +1,16 @@
 buildscript {
+	ext.retrolambda_version='3.2.5'
+	ext.gradle_version='2.1.0'
+	ext.android_support_version='23.3.0'
+	ext.gson_version='2.6.2'
+
 	repositories {
 		mavenCentral()
 	}
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:2.1.0'
+		classpath "com.android.tools.build:gradle:$gradle_version"
+		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
 	}
 }
 
@@ -13,6 +19,7 @@ repositories {
 	maven { url "https://github.com/alter-ego/advanced-android-logger/raw/develop/releases/" }
 }
 
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 
 android {
@@ -32,6 +39,10 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
 	lintOptions {
 		disable 'InvalidPackage'
 		abortOnError false
@@ -43,26 +54,26 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-	compile 'com.android.support:support-v4:23.3.0'
-	compile 'com.android.support:appcompat-v7:23.3.0'
-	compile 'com.android.support:design:23.3.0'
-	compile 'com.android.support:recyclerview-v7:23.3.0'
-	compile 'com.android.support:cardview-v7:23.3.0'
+	compile "com.android.support:support-v4:$android_support_version"
+	compile "com.android.support:appcompat-v7:$android_support_version"
+	compile "com.android.support:design:$android_support_version"
+	compile "com.android.support:recyclerview-v7:$android_support_version"
+	compile "com.android.support:cardview-v7:$android_support_version"
 
 	compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
 
 	compile 'org.projectlombok:lombok:1.14.8'
 
 	compile 'com.google.guava:guava:18.0'
-	compile 'com.google.code.gson:gson:2.3'
+	compile "com.google.code.gson:gson:$gson_version"
 
 	compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 	compile 'com.github.rey5137:material:1.0.0'
 
 	compile 'com.squareup.retrofit2:retrofit:2.0.1'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-	compile 'com.squareup.okhttp:okhttp:2.5.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+	compile 'com.squareup.okhttp:okhttp:2.0.0'
 
 	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 
