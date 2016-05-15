@@ -12,9 +12,14 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHolder.OpenProfileListener {
-    private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout mSwipe;
+    @InjectView(R.id.recyclerview)
+    RecyclerView mRecyclerView;
+    @InjectView(R.id.swipe)
+    SwipeRefreshLayout mSwipe;
     private SoAdapter mAdapter;
     private SeApiManager mSeApiManager;
 
@@ -22,11 +27,9 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
         mSeApiManager = new SeApiManager();
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        mSwipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
 
         mAdapter = new SoAdapter(new ArrayList<User>());
         mAdapter.setOpenProfileListener(this);

@@ -12,6 +12,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
@@ -52,17 +55,18 @@ public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final View mView;
-        private TextView name;
-        private TextView city;
-        private TextView reputation;
-        private ImageView userImage;
+        @InjectView(R.id.name)
+        TextView name;
+        @InjectView(R.id.city)
+        TextView city;
+        @InjectView(R.id.reputation)
+        TextView reputation;
+        @InjectView(R.id.user_image)
+        ImageView userImage;
 
         public ViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.name);
-            city = (TextView) view.findViewById(R.id.city);
-            reputation = (TextView) view.findViewById(R.id.reputation);
-            userImage = (ImageView) view.findViewById(R.id.user_image);
+            ButterKnife.inject(this, view);
             mView = view;
         }
 
@@ -73,17 +77,14 @@ public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkNotNull(mProfileListener, "Must implement OpenProfileListener");
+            mView.setOnClickListener(v -> {
+                checkNotNull(mProfileListener, "Must implement OpenProfileListener");
 
-                    String url = user.getWebsiteUrl();
-                    if (url != null && !url.equals("") && !url.contains("search")) {
-                        mProfileListener.open(url);
-                    } else {
-                        mProfileListener.open(user.getLink());
-                    }
+                String url = user.getWebsiteUrl();
+                if (url != null && !url.equals("") && !url.contains("search")) {
+                    mProfileListener.open(url);
+                } else {
+                    mProfileListener.open(user.getLink());
                 }
             });
         }
