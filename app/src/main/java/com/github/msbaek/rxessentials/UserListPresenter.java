@@ -30,13 +30,13 @@ public class UserListPresenter implements Presenter {
     }
 
     public void initialize() {
-        this.loadUserList();
+        this.loadUserList(1);
     }
 
-    private void loadUserList() {
+    public void loadUserList(int pageNo) {
         view.showRefresh(true);
 
-        int pageNo = 1;
+        // todo: introduce interactor
         mSeApiManager.getMostPopularSOusers(pageNo) //
                 .subscribe(
                         users -> {
