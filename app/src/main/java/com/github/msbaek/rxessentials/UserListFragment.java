@@ -56,6 +56,30 @@ public class UserListFragment extends BaseFragment {
             refreshList(1);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // presenter.destroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // presenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // presenter.pause();
+    }
+
     private void initSwipe() {
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
     }
