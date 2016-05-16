@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends BaseActivity implements SoAdapter.ViewHolder.OpenProfileListener {
+public class MainActivity extends BaseActivity {
     @InjectView(R.id.recyclerview)
     RecyclerView mRecyclerView;
     @InjectView(R.id.swipe)
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity implements SoAdapter.ViewHolder.O
         ButterKnife.inject(this);
 
         mAdapter = new SoAdapter(new ArrayList<>());
-        mAdapter.setOpenProfileListener(this);
+        mAdapter.setOpenProfileListener(this::open);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setHasFixedSize(true);
@@ -69,7 +69,6 @@ public class MainActivity extends BaseActivity implements SoAdapter.ViewHolder.O
         mRecyclerView.setVisibility(visibility);
     }
 
-    @Override
     public void open(String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
