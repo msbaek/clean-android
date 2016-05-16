@@ -12,6 +12,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -21,7 +23,9 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
     @InjectView(R.id.swipe)
     SwipeRefreshLayout mSwipe;
     private SoAdapter mAdapter;
-    private SeApiManager mSeApiManager;
+
+    @Inject
+    SeApiManager mSeApiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        mSeApiManager = new SeApiManager();
+        mSeApiManager = ((App)getApplication()).getApplicationComponent().seApiManager();
 
-        mAdapter = new SoAdapter(new ArrayList<User>());
+        mAdapter = new SoAdapter(new ArrayList<>());
         mAdapter.setOpenProfileListener(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

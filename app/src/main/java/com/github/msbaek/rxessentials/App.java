@@ -11,11 +11,23 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class App extends Application {
     public static DetailedAndroidLogger L = new DetailedAndroidLogger("RXJAVA", IAndroidLogger.LoggingLevel.DEBUG);
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initializeInjector();
+        initializeImageLoader();
+    }
+
+    private void initializeInjector() {
+        applicationComponent = DaggerApplicationComponent.builder() //
+                .applicationModule(new ApplicationModule(this)) //
+                .build();
+    }
+
+    private void initializeImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .showImageOnFail(R.drawable.ic_launcher)
                 .showImageOnLoading(R.drawable.ic_launcher)
@@ -27,5 +39,9 @@ public class App extends Application {
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }
