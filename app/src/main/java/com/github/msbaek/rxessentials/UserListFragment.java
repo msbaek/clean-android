@@ -12,22 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class UserListFragment extends BaseFragment {
+public class UserListFragment extends BaseFragment implements UserListView {
     @InjectView(R.id.recyclerview)
     RecyclerView recyclerView;
     @InjectView(R.id.swipe)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private SoAdapter recyclerViewAdapter;
-
     @Inject
-    SeApiManager mSeApiManager;
+    UserListPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class UserListFragment extends BaseFragment {
         initRecyclerView();
         initSwipe();
 
+        presenter.setView(this);
+
         if (savedInstanceState == null)
             refreshList(1);
     }
@@ -65,19 +67,19 @@ public class UserListFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // presenter.destroy();
+        presenter.destroy();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // presenter.resume();
+        presenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        // presenter.pause();
+        presenter.pause();
     }
 
     private void initSwipe() {
@@ -104,24 +106,18 @@ public class UserListFragment extends BaseFragment {
     }
 
     private void refreshList(int pageNo) {
-        showRefresh(true);
-        mSeApiManager.getMostPopularSOusers(pageNo) //
-                .subscribe(
-                        users -> {
-                            showRefresh(false);
-                            recyclerViewAdapter.updateUsers(users);
-                        },
-                        error -> {
-                            App.L.error(error.toString());
-                            showRefresh(false);
-                        }
-                );
+        presenter.initialize();
     }
 
-    private void showRefresh(boolean show) {
+    public void showRefresh(boolean show) {
         swipeRefreshLayout.setRefreshing(show);
         int visibility = show ? View.GONE : View.VISIBLE;
         recyclerView.setVisibility(visibility);
+    }
+
+    @Override
+    public void updateUsers(List<User> users) {
+        recyclerViewAdapter.updateUsers(users);
     }
 
     public void open(String url) {
