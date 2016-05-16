@@ -4,36 +4,28 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHolder.OpenProfileListener {
+public class MainActivity extends BaseActivity implements SoAdapter.ViewHolder.OpenProfileListener {
     @InjectView(R.id.recyclerview)
     RecyclerView mRecyclerView;
     @InjectView(R.id.swipe)
     SwipeRefreshLayout mSwipe;
-    private SoAdapter mAdapter;
 
-    @Inject
-    SeApiManager mSeApiManager;
+    private SoAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
-        mSeApiManager = ((App)getApplication()).getApplicationComponent().seApiManager();
 
         mAdapter = new SoAdapter(new ArrayList<>());
         mAdapter.setOpenProfileListener(this);
@@ -57,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
     }
 
     private void refreshList(int pageNo) {
-        App.L.error("refreshList(" + pageNo + ")");
         showRefresh(true);
         mSeApiManager.getMostPopularSOusers(pageNo) //
                 .subscribe(

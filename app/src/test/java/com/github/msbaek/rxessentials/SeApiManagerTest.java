@@ -17,7 +17,8 @@ public class SeApiManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        apiManager = new SeApiManager();
+        RetrofitServiceFactory retrofitServiceFactory = new RetrofitServiceFactory();
+        apiManager = new SeApiManager(retrofitServiceFactory);
         apiManager.mainSchedulerThread = Schedulers.io();
     }
 

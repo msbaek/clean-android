@@ -24,7 +24,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    SeApiManager provideSeApiManager() {
-       return new SeApiManager();
+    SeApiManager provideSeApiManager(RetrofitServiceFactory retrofitServiceFactory) {
+       return new SeApiManager(retrofitServiceFactory);
+    }
+
+    @Provides
+    @Singleton
+    RetrofitServiceFactory provideRetrofitServiceFactory() {
+        return new RetrofitServiceFactory();
     }
 }

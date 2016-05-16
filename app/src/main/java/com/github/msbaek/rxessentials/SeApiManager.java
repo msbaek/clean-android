@@ -11,11 +11,10 @@ import rx.schedulers.Schedulers;
 @Accessors(prefix = "m")
 public class SeApiManager {
     private final StackExchangeService mStackExchangeService;
-    private final RetrofitServiceFactory retrofitServiceFactory = new RetrofitServiceFactory();
 
     Scheduler mainSchedulerThread;
 
-    public SeApiManager() {
+    public SeApiManager(RetrofitServiceFactory retrofitServiceFactory) {
         mStackExchangeService = retrofitServiceFactory.create("https://api.stackexchange.com", StackExchangeService.class);
         mainSchedulerThread = AndroidSchedulers.mainThread();
     }
