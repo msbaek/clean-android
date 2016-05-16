@@ -14,6 +14,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import rx.android.view.ViewObservable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -77,16 +78,19 @@ public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            mView.setOnClickListener(v -> {
-                checkNotNull(mProfileListener, "Must implement OpenProfileListener");
+            ViewObservable.clicks(mView) //
+                    .subscribe(
+                            onClickEvent -> {
+                                checkNotNull(mProfileListener, "Must implement OpoenProfileListener");
 
-                String url = user.getWebsiteUrl();
-                if (url != null && !url.equals("") && !url.contains("search")) {
-                    mProfileListener.open(url);
-                } else {
-                    mProfileListener.open(user.getLink());
-                }
-            });
+                                String url = user.getWebsiteUrl();
+                                if (url != null && !url.equals("") && !url.contains("search")) {
+                                    mProfileListener.open(url);
+                                } else {
+                                    mProfileListener.open(user.getLink());
+                                }
+                            }
+                    );
         }
 
         public interface OpenProfileListener {

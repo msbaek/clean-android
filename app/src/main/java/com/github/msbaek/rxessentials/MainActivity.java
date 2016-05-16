@@ -48,16 +48,24 @@ public class MainActivity extends AppCompatActivity implements SoAdapter.ViewHol
 
         mSwipe.setOnRefreshListener(this::onRefresh);
 
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             refreshList(1);
     }
 
     private void refreshList(int pageNo) {
         App.L.error("refreshList(" + pageNo + ")");
         showRefresh(true);
-        List<User> users = mSeApiManager.getMostPopularSOusers(pageNo);
-        showRefresh(false);
-        mAdapter.updateUsers(users);
+        mSeApiManager.getMostPopularSOusers(pageNo) //
+                .subscribe(
+                        users -> {
+                            showRefresh(false);
+                            mAdapter.updateUsers(users);
+                        },
+                        error -> {
+                            App.L.error(error.toString());
+                            showRefresh(false);
+                        }
+                );
     }
 
     private void showRefresh(boolean show) {
