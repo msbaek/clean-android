@@ -11,6 +11,7 @@ buildscript {
 	dependencies {
 		classpath "com.android.tools.build:gradle:$gradle_version"
 		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
+		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
 	}
 }
 
@@ -21,6 +22,7 @@ repositories {
 
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
 	compileSdkVersion 23
@@ -82,6 +84,10 @@ dependencies {
 
 	compile 'io.reactivex:rxandroid:0.24.0'
 	compile 'io.reactivex:rxjava-joins:0.22.0'
+
+	apt 'com.google.dagger:dagger-compiler:2.0'
+	compile 'com.google.dagger:dagger:2.0'
+	provided 'javax.annotation:jsr250-api:1.0'
 
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.robolectric:robolectric:3.0'
