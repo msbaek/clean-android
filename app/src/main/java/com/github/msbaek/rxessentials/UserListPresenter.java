@@ -1,13 +1,18 @@
 package com.github.msbaek.rxessentials;
 
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import rx.Subscriber;
 
 @PerActivity
 public class UserListPresenter implements Presenter {
     private UserListView view;
 
-    @Inject
-    SeApiManager mSeApiManager;
+    @Inject @Named("getUserList")
+    UseCase useCase;
 
     @Inject
     public UserListPresenter() {
@@ -23,6 +28,8 @@ public class UserListPresenter implements Presenter {
 
     @Override
     public void destroy() {
+        useCase.unsubscribe();
+        view = null;
     }
 
     public void setView(UserListView view) {
@@ -35,18 +42,24 @@ public class UserListPresenter implements Presenter {
 
     public void loadUserList(int pageNo) {
         view.showRefresh(true);
+        useCase.execute(new GetUserListSubscriber());
+    }
 
-        // todo: introduce interactor
-        mSeApiManager.getMostPopularSOusers(pageNo) //
-                .subscribe(
-                        users -> {
-                            view.showRefresh(false);
-                            view.updateUsers(users);
-                        },
-                        error -> {
-                            App.L.error(error.toString());
-                            view.showRefresh(false);
-                        }
-                );
+    private class GetUserListSubscriber extends Subscriber<List<User>> {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            App.L.error(e.toString());
+            view.showRefresh(false);
+        }
+
+        @Override
+        public void onNext(List<User> users) {
+            view.showRefresh(false);
+            view.updateUsers(users);
+        }
     }
 }
