@@ -15,4 +15,5 @@ public interface ApplicationComponent {
     Context context();
     SeApiManager seApiManager();
     RetrofitServiceFactory retrofitServiceFactory();
+    StackExchangeService stackExchangeService();
 }

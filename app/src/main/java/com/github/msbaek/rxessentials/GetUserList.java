@@ -5,14 +5,16 @@ import javax.inject.Inject;
 import rx.Observable;
 
 public class GetUserList extends UseCase {
+    private StackExchangeService stackExchangeService;
+
     @Inject
-    public GetUserList() {
+    public GetUserList(StackExchangeService stackExchangeService) {
+        this.stackExchangeService = stackExchangeService;
     }
 
     @Override
     protected Observable getObservable() {
-        StackExchangeService mStackExchangeService = new RetrofitServiceFactory().create("https://api.stackexchange.com", StackExchangeService.class);
-        return mStackExchangeService.getMostPopularSOusers(1)
+        return stackExchangeService.getMostPopularSOusers(1)
                 .map(UsersResponse::getUsers);
     }
 }

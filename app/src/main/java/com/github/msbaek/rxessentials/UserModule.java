@@ -8,8 +8,8 @@ import dagger.Provides;
 @Module
 public class UserModule {
     @Provides @PerActivity @Named("getUserList")
-    UseCase provideGetUserList(GetUserList getUserList) {
-        return new GetUserList();
+    UseCase provideGetUserList(StackExchangeService stackExchangeService) {
+        return new GetUserList(stackExchangeService);
     }
 
     @Provides @PerActivity @Named("getUserDetail")
