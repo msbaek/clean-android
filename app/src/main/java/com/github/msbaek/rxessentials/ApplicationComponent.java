@@ -13,7 +13,6 @@ public interface ApplicationComponent {
 
     // exposed to sub-graphs
     Context context();
-    SeApiManager seApiManager();
     RetrofitServiceFactory retrofitServiceFactory();
     StackExchangeService stackExchangeService();
 }

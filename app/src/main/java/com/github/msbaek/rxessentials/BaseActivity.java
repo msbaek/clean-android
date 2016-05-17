@@ -5,12 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import javax.inject.Inject;
-
 public abstract class BaseActivity extends Activity {
-    @Inject
-    SeApiManager mSeApiManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
