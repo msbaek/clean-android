@@ -8,15 +8,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
-public abstract class UseCase {
+public abstract class UseCase<T extends UseCaseRequest> {
     Subscription subscription = Subscriptions.empty();
     private Scheduler mainThread;
 
-    protected abstract Observable getObservable();
+    protected abstract Observable getObservable(T request);
 
-    public void execute(Subscriber UseCaseSubscriber) {
+    public void execute(T request, Subscriber UseCaseSubscriber) {
         mainThread = AndroidSchedulers.mainThread();
-        this.subscription = this.getObservable()
+        this.subscription = this.getObservable(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(mainThread)
                 .subscribe(UseCaseSubscriber);

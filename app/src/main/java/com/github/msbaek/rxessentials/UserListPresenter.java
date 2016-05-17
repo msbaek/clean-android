@@ -42,7 +42,8 @@ public class UserListPresenter implements Presenter {
 
     public void loadUserList(int pageNo) {
         view.showRefresh(true);
-        useCase.execute(new GetUserListSubscriber());
+        useCase.execute(new UserListRequest(pageNo),
+                new GetUserListSubscriber());
     }
 
     private class GetUserListSubscriber extends Subscriber<List<User>> {

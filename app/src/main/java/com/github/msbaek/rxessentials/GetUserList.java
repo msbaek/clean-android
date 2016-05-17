@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-public class GetUserList extends UseCase {
+public class GetUserList extends UseCase<UserListRequest> {
     private StackExchangeService stackExchangeService;
 
     @Inject
@@ -13,8 +13,8 @@ public class GetUserList extends UseCase {
     }
 
     @Override
-    protected Observable getObservable() {
-        return stackExchangeService.getMostPopularSOusers(1)
+    protected Observable getObservable(UserListRequest request) {
+        return stackExchangeService.getMostPopularSOusers(request.pageNo)
                 .map(UsersResponse::getUsers);
     }
 }
