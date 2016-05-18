@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger;
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+import com.github.msbaek.rxessentials.di.ApplicationComponent;
+import com.github.msbaek.rxessentials.di.ApplicationModule;
+import com.github.msbaek.rxessentials.di.DaggerApplicationComponent;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;

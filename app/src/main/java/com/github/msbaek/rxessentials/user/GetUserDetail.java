@@ -1,0 +1,12 @@
+package com.github.msbaek.rxessentials.user;
+
+import com.github.msbaek.rxessentials.common.UseCase;
+
+import rx.Observable;
+
+public class GetUserDetail extends UseCase<UserDetailRequest> {
+    @Override
+    protected Observable getObservable(UserDetailRequest request) {
+        return Observable.empty();
+    }
+}
