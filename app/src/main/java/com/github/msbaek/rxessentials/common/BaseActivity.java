@@ -23,7 +23,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected ApplicationComponent getApplicationComponent() {
-        return ((App)getApplication()).getApplicationComponent();
+        return ((App) getApplication()).getApplicationComponent();
     }
 
     protected ActivityModule getActivityModule() {

@@ -12,13 +12,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import rx.Subscriber;
-
 @PerActivity
 public class UserListPresenter implements Presenter {
     private UserListView view;
 
-    @Inject @Named("getUserList")
+    @Inject
+    @Named("getUserList")
     UseCase useCase;
 
     @Inject

@@ -28,7 +28,7 @@ public class UserActivity extends BaseActivity implements HasComponent<UserCompo
         rxBus.toObserverable().subscribe(
                 o -> {
                     Toast toast = Toast.makeText(this, "UserActivity: event received [" + o + "]", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.LEFT|Gravity.TOP, 0, 0);
+                    toast.setGravity(Gravity.LEFT | Gravity.TOP, 0, 0);
                     toast.show();
                 }
         );

@@ -9,5 +9,6 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, UserModule.class})
 public interface UserComponent {
     void inject(UserListFragment userListFragment);
+
     void inject(UserDetailFragment userDetailFragment);
 }

@@ -18,7 +18,10 @@ public interface ApplicationComponent {
 
     // exposed to sub-graphs
     Context context();
+
     RetrofitServiceFactory retrofitServiceFactory();
+
     UserRepository stackExchangeService();
+
     RxBus rxBus();
 }

@@ -12,13 +12,16 @@ import dagger.Provides;
 
 @Module
 public class UserModule {
-    @Provides @PerActivity
+    @Provides
+    @PerActivity
     @Named("getUserList")
     UseCase provideGetUserList(UserRepository userRepository) {
         return new GetUserList(userRepository);
     }
 
-    @Provides @PerActivity @Named("getUserDetail")
+    @Provides
+    @PerActivity
+    @Named("getUserDetail")
     UseCase provideGetUserDetail(GetUserDetail getUserDetail) {
         return new GetUserDetail();
     }
