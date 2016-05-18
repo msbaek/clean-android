@@ -1,7 +1,7 @@
 package com.github.msbaek.rxessentials.di;
 
-import com.github.msbaek.rxessentials.user.UserDetailFragment;
-import com.github.msbaek.rxessentials.user.UserListFragment;
+import com.github.msbaek.rxessentials.user.view.UserDetailFragment;
+import com.github.msbaek.rxessentials.user.view.UserListFragment;
 
 import dagger.Component;
 

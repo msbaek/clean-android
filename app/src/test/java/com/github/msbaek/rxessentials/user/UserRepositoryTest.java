@@ -1,7 +1,9 @@
 package com.github.msbaek.rxessentials.user;
 
 import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
-import com.github.msbaek.rxessentials.user.StackExchangeService;
+import com.github.msbaek.rxessentials.user.domain.UserRepository;
+import com.github.msbaek.rxessentials.user.domain.User;
+import com.github.msbaek.rxessentials.user.domain.UsersResponse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,18 +15,18 @@ import java.util.List;
 import rx.Observable;
 
 @RunWith(RobolectricTestRunner.class)
-public class StackExchangeServiceTest {
-    private final StackExchangeService mStackExchangeService;
+public class UserRepositoryTest {
+    private final UserRepository mUserRepository;
 
-    public StackExchangeServiceTest() {
-        mStackExchangeService = new RetrofitServiceFactory().create("https://api.stackexchange.com", StackExchangeService.class);
+    public UserRepositoryTest() {
+        mUserRepository = new RetrofitServiceFactory().create("https://api.stackexchange.com", UserRepository.class);
     }
 
     @Test
     public void getTenMostPopularSOusers() throws Exception {
         final List<User> results = new ArrayList<>();
 
-        Observable<List<User>> users = mStackExchangeService.getMostPopularSOusers(1) //
+        Observable<List<User>> users = mUserRepository.getMostPopularSOusers(1) //
                 .map(UsersResponse::getUsers);
 
         users.toBlocking().forEach(results::addAll);

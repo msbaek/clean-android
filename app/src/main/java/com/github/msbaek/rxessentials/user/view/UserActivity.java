@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.user;
+package com.github.msbaek.rxessentials.user.view;
 
 import android.os.Bundle;
 import android.view.Gravity;

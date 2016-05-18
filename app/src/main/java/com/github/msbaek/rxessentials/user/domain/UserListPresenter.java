@@ -1,6 +1,7 @@
-package com.github.msbaek.rxessentials.user;
+package com.github.msbaek.rxessentials.user.domain;
 
 import com.github.msbaek.rxessentials.App;
+import com.github.msbaek.rxessentials.common.DefaultSubscriber;
 import com.github.msbaek.rxessentials.common.Presenter;
 import com.github.msbaek.rxessentials.common.RxBus;
 import com.github.msbaek.rxessentials.common.UseCase;
@@ -56,11 +57,7 @@ public class UserListPresenter implements Presenter {
         rxBus.send(new ScrollEvent(pageNo));
     }
 
-    private class GetUserListSubscriber extends Subscriber<List<User>> {
-        @Override
-        public void onCompleted() {
-        }
-
+    private class GetUserListSubscriber extends DefaultSubscriber<List<User>> {
         @Override
         public void onError(Throwable e) {
             App.L.error(e.toString());

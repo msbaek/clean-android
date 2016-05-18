@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.user;
+package com.github.msbaek.rxessentials.user.view;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +17,9 @@ import com.github.msbaek.rxessentials.common.BaseFragment;
 import com.github.msbaek.rxessentials.common.EndlessRecyclerOnScrollListener;
 import com.github.msbaek.rxessentials.common.RxBus;
 import com.github.msbaek.rxessentials.di.UserComponent;
+import com.github.msbaek.rxessentials.user.domain.User;
+import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
+import com.github.msbaek.rxessentials.user.domain.UserListView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.user;
+package com.github.msbaek.rxessentials.user.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.msbaek.rxessentials.R;
+import com.github.msbaek.rxessentials.user.domain.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

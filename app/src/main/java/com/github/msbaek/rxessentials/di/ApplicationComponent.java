@@ -5,7 +5,7 @@ import android.content.Context;
 import com.github.msbaek.rxessentials.common.BaseActivity;
 import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
 import com.github.msbaek.rxessentials.common.RxBus;
-import com.github.msbaek.rxessentials.user.StackExchangeService;
+import com.github.msbaek.rxessentials.user.domain.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -19,6 +19,6 @@ public interface ApplicationComponent {
     // exposed to sub-graphs
     Context context();
     RetrofitServiceFactory retrofitServiceFactory();
-    StackExchangeService stackExchangeService();
+    UserRepository stackExchangeService();
     RxBus rxBus();
 }

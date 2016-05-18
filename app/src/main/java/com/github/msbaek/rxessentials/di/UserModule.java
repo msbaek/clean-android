@@ -1,9 +1,9 @@
 package com.github.msbaek.rxessentials.di;
 
 import com.github.msbaek.rxessentials.common.UseCase;
-import com.github.msbaek.rxessentials.user.GetUserDetail;
-import com.github.msbaek.rxessentials.user.GetUserList;
-import com.github.msbaek.rxessentials.user.StackExchangeService;
+import com.github.msbaek.rxessentials.user.domain.GetUserDetail;
+import com.github.msbaek.rxessentials.user.domain.GetUserList;
+import com.github.msbaek.rxessentials.user.domain.UserRepository;
 
 import javax.inject.Named;
 
@@ -14,8 +14,8 @@ import dagger.Provides;
 public class UserModule {
     @Provides @PerActivity
     @Named("getUserList")
-    UseCase provideGetUserList(StackExchangeService stackExchangeService) {
-        return new GetUserList(stackExchangeService);
+    UseCase provideGetUserList(UserRepository userRepository) {
+        return new GetUserList(userRepository);
     }
 
     @Provides @PerActivity @Named("getUserDetail")

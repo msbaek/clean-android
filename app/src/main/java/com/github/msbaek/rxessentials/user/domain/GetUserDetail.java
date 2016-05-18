@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.user;
+package com.github.msbaek.rxessentials.user.domain;
 
 import com.github.msbaek.rxessentials.common.UseCase;
 

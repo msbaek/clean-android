@@ -5,7 +5,7 @@ import android.content.Context;
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
 import com.github.msbaek.rxessentials.common.RxBus;
-import com.github.msbaek.rxessentials.user.StackExchangeService;
+import com.github.msbaek.rxessentials.user.domain.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -35,8 +35,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    StackExchangeService provideStackExchangeService(RetrofitServiceFactory retrofitServiceFactory) {
-        return retrofitServiceFactory.create("https://api.stackexchange.com", StackExchangeService.class);
+    UserRepository provideStackExchangeService(RetrofitServiceFactory retrofitServiceFactory) {
+        return retrofitServiceFactory.create("https://api.stackexchange.com", UserRepository.class);
     }
 
     @Provides
