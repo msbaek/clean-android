@@ -2,8 +2,6 @@ package com.github.msbaek.rxessentials;
 
 import android.content.Context;
 
-import java.util.Stack;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -34,5 +32,11 @@ public class ApplicationModule {
     @Singleton
     StackExchangeService provideStackExchangeService(RetrofitServiceFactory retrofitServiceFactory) {
         return retrofitServiceFactory.create("https://api.stackexchange.com", StackExchangeService.class);
+    }
+
+    @Provides
+    @Singleton
+    RxBus provideRxBus() {
+        return new RxBus();
     }
 }

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class UserListFragment extends BaseFragment implements UserListView {
     private SoAdapter recyclerViewAdapter;
     @Inject
     UserListPresenter presenter;
+    @Inject
+    RxBus rxBus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class UserListFragment extends BaseFragment implements UserListView {
         View view = inflater.inflate(R.layout.user_list, container, false);
         ButterKnife.inject(this, view);
 
+        rxBus.toObserverable().subscribe(
+                o -> {
+                    Toast.makeText(getActivity(), "UserListFragment: event received [" + o + "]", Toast.LENGTH_SHORT).show();
+                }
+        );
         return view;
     }
 

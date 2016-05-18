@@ -15,4 +15,5 @@ public interface ApplicationComponent {
     Context context();
     RetrofitServiceFactory retrofitServiceFactory();
     StackExchangeService stackExchangeService();
+    RxBus rxBus();
 }

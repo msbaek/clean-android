@@ -15,6 +15,9 @@ public class UserListPresenter implements Presenter {
     UseCase useCase;
 
     @Inject
+    RxBus rxBus;
+
+    @Inject
     public UserListPresenter() {
     }
 
@@ -44,6 +47,7 @@ public class UserListPresenter implements Presenter {
         view.showRefresh(true);
         useCase.execute(new UserListRequest(pageNo),
                 new GetUserListSubscriber());
+        rxBus.send(new ScrollEvent(pageNo));
     }
 
     private class GetUserListSubscriber extends Subscriber<List<User>> {
