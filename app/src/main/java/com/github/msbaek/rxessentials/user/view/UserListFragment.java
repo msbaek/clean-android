@@ -36,7 +36,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private SoAdapter recyclerViewAdapter;
+    private UserListAdapter recyclerViewAdapter;
     @Inject
     UserListPresenter presenter;
     @Inject
@@ -120,7 +120,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void initAdapter() {
-        recyclerViewAdapter = new SoAdapter(new ArrayList<>());
+        recyclerViewAdapter = new UserListAdapter(new ArrayList<>());
         recyclerViewAdapter.setOpenProfileListener(this::open);
     }
 

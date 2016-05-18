@@ -19,11 +19,11 @@ import rx.android.view.ViewObservable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private static ViewHolder.OpenProfileListener mProfileListener;
     private List<User> mUsers = new ArrayList<>();
 
-    public SoAdapter(List<User> users) {
+    public UserListAdapter(List<User> users) {
         mUsers = users;
     }
 
@@ -33,13 +33,13 @@ public class SoAdapter extends RecyclerView.Adapter<SoAdapter.ViewHolder> {
     }
 
     @Override
-    public SoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.so_list_item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(SoAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(UserListAdapter.ViewHolder holder, int position) {
         if (position < mUsers.size()) {
             User user = mUsers.get(position);
             holder.setUser(user);
