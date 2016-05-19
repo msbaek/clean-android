@@ -1,6 +1,6 @@
 package com.github.msbaek.rxessentials.user;
 
-import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
+import com.github.msbaek.rxessentials.common.net.RetrofitServiceFactory;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserRepository;
 import com.github.msbaek.rxessentials.user.domain.UsersResponse;

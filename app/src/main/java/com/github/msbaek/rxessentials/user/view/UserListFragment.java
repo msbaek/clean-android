@@ -10,13 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
-import com.github.msbaek.rxessentials.common.BaseFragment;
-import com.github.msbaek.rxessentials.common.EndlessRecyclerOnScrollListener;
-import com.github.msbaek.rxessentials.common.RxBus;
+import com.github.msbaek.rxessentials.common.rx.RxBus;
+import com.github.msbaek.rxessentials.common.view.BaseFragment;
+import com.github.msbaek.rxessentials.common.view.EndlessRecyclerOnScrollListener;
 import com.github.msbaek.rxessentials.di.UserComponent;
+import com.github.msbaek.rxessentials.user.domain.OpenProfileEvent;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
@@ -55,7 +56,10 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
         rxBus.toObserverable().subscribe(
                 o -> {
-                    Toast.makeText(getActivity(), "UserListFragment: event received [" + o + "]", Toast.LENGTH_SHORT).show();
+                    if (o instanceof OpenProfileEvent) {
+                        OpenProfileEvent event = (OpenProfileEvent) o;
+                        presenter.openProfile(event.user);
+                    }
                 }
         );
         return view;
@@ -119,7 +123,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
     private void initAdapter() {
         recyclerViewAdapter = new UserListAdapter(new ArrayList<>());
-        recyclerViewAdapter.setOpenProfileListener(this::open);
     }
 
     private void refreshList() {
@@ -137,7 +140,8 @@ public class UserListFragment extends BaseFragment implements UserListView {
         recyclerViewAdapter.updateUsers(users);
     }
 
-    public void open(String url) {
+    public void openProfile(String url) {
+        App.L.error("called with url=" + url);
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

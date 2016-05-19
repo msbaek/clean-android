@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.msbaek.rxessentials.R;
+import com.github.msbaek.rxessentials.common.rx.RxBus;
+import com.github.msbaek.rxessentials.user.domain.OpenProfileEvent;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -18,10 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rx.android.view.ViewObservable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
-    private static ViewHolder.OpenProfileListener mProfileListener;
     private List<User> mUsers = new ArrayList<>();
 
     public UserListAdapter(List<User> users) {
@@ -52,11 +51,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return mUsers == null ? 0 : mUsers.size();
     }
 
-    public void setOpenProfileListener(ViewHolder.OpenProfileListener listener) {
-        mProfileListener = listener;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final View mView;
         @InjectView(R.id.name)
         TextView name;
@@ -83,24 +78,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             ViewObservable.clicks(mView) //
                     .subscribe(
                             onClickEvent -> {
-                                openProfile(user);
+                                RxBus.getInstance().send(new OpenProfileEvent(user));
                             }
                     );
-        }
-
-        private void openProfile(User user) {
-            checkNotNull(mProfileListener, "Must implement OpoenProfileListener");
-
-            String url = user.getWebsiteUrl();
-            if (url != null && !url.equals("") && !url.contains("search")) {
-                mProfileListener.open(url);
-            } else {
-                mProfileListener.open(user.getLink());
-            }
-        }
-
-        public interface OpenProfileListener {
-            void open(String url);
         }
     }
 }

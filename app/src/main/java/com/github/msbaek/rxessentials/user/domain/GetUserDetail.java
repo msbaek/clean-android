@@ -1,6 +1,6 @@
 package com.github.msbaek.rxessentials.user.domain;
 
-import com.github.msbaek.rxessentials.common.UseCase;
+import com.github.msbaek.rxessentials.common.mvp.UseCase;
 
 import rx.Observable;
 

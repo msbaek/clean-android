@@ -2,9 +2,9 @@ package com.github.msbaek.rxessentials.di;
 
 import android.content.Context;
 
-import com.github.msbaek.rxessentials.common.BaseActivity;
-import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
-import com.github.msbaek.rxessentials.common.RxBus;
+import com.github.msbaek.rxessentials.common.net.RetrofitServiceFactory;
+import com.github.msbaek.rxessentials.common.rx.RxBus;
+import com.github.msbaek.rxessentials.common.view.BaseActivity;
 import com.github.msbaek.rxessentials.user.domain.UserRepository;
 
 import javax.inject.Singleton;

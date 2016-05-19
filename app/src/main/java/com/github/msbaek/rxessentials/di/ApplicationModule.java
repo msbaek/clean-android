@@ -3,8 +3,8 @@ package com.github.msbaek.rxessentials.di;
 import android.content.Context;
 
 import com.github.msbaek.rxessentials.App;
-import com.github.msbaek.rxessentials.common.RetrofitServiceFactory;
-import com.github.msbaek.rxessentials.common.RxBus;
+import com.github.msbaek.rxessentials.common.net.RetrofitServiceFactory;
+import com.github.msbaek.rxessentials.common.rx.RxBus;
 import com.github.msbaek.rxessentials.user.domain.UserRepository;
 
 import javax.inject.Singleton;
@@ -42,6 +42,6 @@ public class ApplicationModule {
     @Provides
     @Singleton
     RxBus provideRxBus() {
-        return new RxBus();
+        return RxBus.getInstance();
     }
 }

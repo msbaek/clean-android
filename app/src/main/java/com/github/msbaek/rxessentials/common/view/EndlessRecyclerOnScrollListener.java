@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.common;
+package com.github.msbaek.rxessentials.common.view;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

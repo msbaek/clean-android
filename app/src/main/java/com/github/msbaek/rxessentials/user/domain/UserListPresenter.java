@@ -1,10 +1,10 @@
 package com.github.msbaek.rxessentials.user.domain;
 
 import com.github.msbaek.rxessentials.App;
-import com.github.msbaek.rxessentials.common.DefaultSubscriber;
-import com.github.msbaek.rxessentials.common.Presenter;
-import com.github.msbaek.rxessentials.common.RxBus;
-import com.github.msbaek.rxessentials.common.UseCase;
+import com.github.msbaek.rxessentials.common.mvp.Presenter;
+import com.github.msbaek.rxessentials.common.mvp.UseCase;
+import com.github.msbaek.rxessentials.common.rx.DefaultSubscriber;
+import com.github.msbaek.rxessentials.common.rx.RxBus;
 import com.github.msbaek.rxessentials.di.PerActivity;
 
 import java.util.List;
@@ -54,6 +54,15 @@ public class UserListPresenter implements Presenter {
         useCase.execute(new UserListRequest(pageNo),
                 new GetUserListSubscriber());
         rxBus.send(new ScrollEvent(pageNo));
+    }
+
+    public void openProfile(User user) {
+        String url = user.getWebsiteUrl();
+        if (url != null && !url.equals("") && !url.contains("search")) {
+            view.openProfile(url);
+        } else {
+            view.openProfile(user.getLink());
+        }
     }
 
     private class GetUserListSubscriber extends DefaultSubscriber<List<User>> {

@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.common;
+package com.github.msbaek.rxessentials.common.view;
 
 import android.app.Fragment;
 import android.widget.Toast;

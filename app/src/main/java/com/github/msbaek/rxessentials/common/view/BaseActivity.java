@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.common;
+package com.github.msbaek.rxessentials.common.view;
 
 import android.app.Activity;
 import android.app.Fragment;

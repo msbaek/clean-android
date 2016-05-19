@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.common;
+package com.github.msbaek.rxessentials.common.rx;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -27,5 +27,20 @@ public class RxBus {
 
     public boolean hasObservers() {
         return _bus.hasObservers();
+    }
+
+    private RxBus() {
+    }
+
+    public static RxBus instance = null;
+
+    public static RxBus getInstance() {
+        if(instance == null) {
+            synchronized (RxBus.class) {
+                if(instance == null)
+                    instance = new RxBus();
+            }
+        }
+        return instance;
     }
 }

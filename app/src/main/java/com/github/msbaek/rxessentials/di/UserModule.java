@@ -1,6 +1,6 @@
 package com.github.msbaek.rxessentials.di;
 
-import com.github.msbaek.rxessentials.common.UseCase;
+import com.github.msbaek.rxessentials.common.mvp.UseCase;
 import com.github.msbaek.rxessentials.user.domain.GetUserDetail;
 import com.github.msbaek.rxessentials.user.domain.GetUserList;
 import com.github.msbaek.rxessentials.user.domain.UserRepository;

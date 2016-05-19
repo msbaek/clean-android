@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.common;
+package com.github.msbaek.rxessentials.common.mvp;
 
 public interface Presenter {
     /**
