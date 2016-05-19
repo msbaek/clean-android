@@ -1,8 +1,8 @@
 package com.github.msbaek.rxessentials.user.domain;
 
 
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit.http.GET;
+import retrofit.http.Query;
 import rx.Observable;
 
 public interface UserRepository {

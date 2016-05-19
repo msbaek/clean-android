@@ -26,14 +26,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.InjectView;
 
 public class UserListFragment extends BaseFragment implements UserListView {
-    @BindView(R.id.recyclerview)
+    @InjectView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @BindView(R.id.swipe)
+    @InjectView(R.id.swipe)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private UserListAdapter recyclerViewAdapter;
@@ -41,7 +40,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
     UserListPresenter presenter;
     @Inject
     RxBus rxBus;
-    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.inject(this, view);
 
         rxBus.toObserverable().subscribe(
                 o -> {
@@ -80,7 +78,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        ButterKnife.reset(this);
     }
 
     @Override

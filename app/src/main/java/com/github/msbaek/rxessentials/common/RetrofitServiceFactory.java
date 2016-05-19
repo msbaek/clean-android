@@ -1,14 +1,13 @@
 package com.github.msbaek.rxessentials.common;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit.RestAdapter;
 
 public class RetrofitServiceFactory {
     public <T> T create(String endpoint, Class<T> serviceClass) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(endpoint)
-                .addConverterFactory(GsonConverterFactory.create())
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(endpoint)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
-        return retrofit.create(serviceClass);
+        return restAdapter.create(serviceClass);
     }
 }

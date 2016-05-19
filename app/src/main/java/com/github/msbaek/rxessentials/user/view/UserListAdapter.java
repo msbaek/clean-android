@@ -14,7 +14,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import rx.android.view.ViewObservable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -57,17 +58,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final View mView;
-        @BindView(R.id.name)
+        @InjectView(R.id.name)
         TextView name;
-        @BindView(R.id.city)
+        @InjectView(R.id.city)
         TextView city;
-        @BindView(R.id.reputation)
+        @InjectView(R.id.reputation)
         TextView reputation;
-        @BindView(R.id.user_image)
+        @InjectView(R.id.user_image)
         ImageView userImage;
 
         public ViewHolder(View view) {
             super(view);
+            ButterKnife.inject(this, view);
             mView = view;
         }
 
