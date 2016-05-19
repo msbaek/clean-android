@@ -12,7 +12,7 @@ import java.util.List;
 
 @PerActivity
 public class UserListPresenter implements Presenter {
-    private UserListView view;
+    public UserListView view;
 
     @Inject
     @Named("getUserList")
@@ -45,7 +45,6 @@ public class UserListPresenter implements Presenter {
     }
 
     public void loadUserList(int pageNo) {
-        view.showRefresh(true);
         useCase.execute(new UserListRequest(pageNo), new GetUserListSubscriber());
     }
 
