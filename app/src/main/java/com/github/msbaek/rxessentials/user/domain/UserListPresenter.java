@@ -6,10 +6,9 @@ import com.github.msbaek.rxessentials.common.mvp.UseCase;
 import com.github.msbaek.rxessentials.common.rx.DefaultSubscriber;
 import com.github.msbaek.rxessentials.di.PerActivity;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @PerActivity
 public class UserListPresenter implements Presenter {
@@ -17,7 +16,7 @@ public class UserListPresenter implements Presenter {
 
     @Inject
     @Named("getUserList")
-    UseCase useCase;
+    UseCase<UserListRequest, List<User>> useCase;
 
     @Inject
     public UserListPresenter() {
@@ -47,8 +46,7 @@ public class UserListPresenter implements Presenter {
 
     public void loadUserList(int pageNo) {
         view.showRefresh(true);
-        useCase.execute(new UserListRequest(pageNo),
-                new GetUserListSubscriber());
+        useCase.execute(new UserListRequest(pageNo), new GetUserListSubscriber());
     }
 
     public void openProfile(User user) {
