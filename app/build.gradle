@@ -3,6 +3,8 @@ buildscript {
 	ext.gradle_version='2.1.0'
 	ext.android_support_version='23.3.0'
 	ext.gson_version='2.3'
+	ext.kotlin_version = '1.0.1-2'
+	ext.anko_version = '0.8.2'
 
 	repositories {
 		mavenCentral()
@@ -10,6 +12,8 @@ buildscript {
 
 	dependencies {
 		classpath "com.android.tools.build:gradle:$gradle_version"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
 		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 	}
@@ -23,6 +27,8 @@ repositories {
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
 	compileSdkVersion 23
@@ -51,6 +57,10 @@ android {
 	}
 	packagingOptions {
 		exclude 'META-INF/services/javax.annotation.processing.Processor'
+	}
+	compileOptions {
+		targetCompatibility 1.8
+		sourceCompatibility 1.8
 	}
 }
 
@@ -87,10 +97,19 @@ dependencies {
 	compile 'io.reactivex:rxandroid:0.24.0'
 	compile 'io.reactivex:rxjava-joins:0.22.0'
 
-	apt 'com.google.dagger:dagger-compiler:2.2'
+	kapt 'com.google.dagger:dagger-compiler:2.2'
 	compile 'com.google.dagger:dagger:2.2'
 	provided 'javax.annotation:jsr250-api:1.0'
 
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	compile "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+	compile "org.jetbrains.anko:anko-common:$anko_version"
+	compile "org.jetbrains.anko:anko-sqlite:$anko_version"
+
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.robolectric:robolectric:3.0'
+}
+
+kapt {
+	generateStubs = true
 }

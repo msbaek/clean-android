@@ -7,9 +7,16 @@ import java.util.List;
 
 import lombok.Data;
 
-@Data
 public class UsersResponse {
     @SerializedName("items")
     @Expose
     private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }
