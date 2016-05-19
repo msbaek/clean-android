@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.common.rx.RxBus;
-import com.github.msbaek.rxessentials.user.domain.OpenProfileEvent;
 import com.github.msbaek.rxessentials.user.domain.User;
+import com.github.msbaek.rxessentials.user.domain.event.OpenProfileEvent;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

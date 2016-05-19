@@ -1,4 +1,4 @@
-package com.github.msbaek.rxessentials.user.domain;
+package com.github.msbaek.rxessentials.user.domain.event;
 
 import com.github.msbaek.rxessentials.user.domain.User;
 

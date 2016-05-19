@@ -17,10 +17,10 @@ import com.github.msbaek.rxessentials.common.rx.RxBus;
 import com.github.msbaek.rxessentials.common.view.BaseFragment;
 import com.github.msbaek.rxessentials.common.view.EndlessRecyclerOnScrollListener;
 import com.github.msbaek.rxessentials.di.UserComponent;
-import com.github.msbaek.rxessentials.user.domain.OpenProfileEvent;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
+import com.github.msbaek.rxessentials.user.domain.event.OpenProfileEvent;
 
 import java.util.ArrayList;
 import java.util.List;

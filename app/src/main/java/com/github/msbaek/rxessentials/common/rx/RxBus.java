@@ -35,9 +35,9 @@ public class RxBus {
     public static RxBus instance = null;
 
     public static RxBus getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (RxBus.class) {
-                if(instance == null)
+                if (instance == null)
                     instance = new RxBus();
             }
         }
