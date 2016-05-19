@@ -11,7 +11,7 @@ buildscript {
 	dependencies {
 		classpath "com.android.tools.build:gradle:$gradle_version"
 		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
-		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 	}
 }
 
@@ -72,8 +72,10 @@ dependencies {
 	compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 	compile 'com.github.rey5137:material:1.0.0'
 
-	compile 'com.squareup.retrofit:retrofit:1.9.0'
-//	compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+	compile 'com.squareup.retrofit2:retrofit:2.0.2'
+	compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+	compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
 
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 	compile 'com.squareup.okhttp:okhttp:2.0.0'
@@ -85,8 +87,8 @@ dependencies {
 	compile 'io.reactivex:rxandroid:0.24.0'
 	compile 'io.reactivex:rxjava-joins:0.22.0'
 
-	apt 'com.google.dagger:dagger-compiler:2.0'
-	compile 'com.google.dagger:dagger:2.0'
+	apt 'com.google.dagger:dagger-compiler:2.2'
+	compile 'com.google.dagger:dagger:2.2'
 	provided 'javax.annotation:jsr250-api:1.0'
 
 	testCompile 'junit:junit:4.12'

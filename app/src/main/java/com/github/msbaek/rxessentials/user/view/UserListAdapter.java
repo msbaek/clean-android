@@ -83,16 +83,20 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             ViewObservable.clicks(mView) //
                     .subscribe(
                             onClickEvent -> {
-                                checkNotNull(mProfileListener, "Must implement OpoenProfileListener");
-
-                                String url = user.getWebsiteUrl();
-                                if (url != null && !url.equals("") && !url.contains("search")) {
-                                    mProfileListener.open(url);
-                                } else {
-                                    mProfileListener.open(user.getLink());
-                                }
+                                openProfile(user);
                             }
                     );
+        }
+
+        private void openProfile(User user) {
+            checkNotNull(mProfileListener, "Must implement OpoenProfileListener");
+
+            String url = user.getWebsiteUrl();
+            if (url != null && !url.equals("") && !url.contains("search")) {
+                mProfileListener.open(url);
+            } else {
+                mProfileListener.open(user.getLink());
+            }
         }
 
         public interface OpenProfileListener {
