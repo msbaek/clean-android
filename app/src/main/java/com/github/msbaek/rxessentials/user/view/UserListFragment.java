@@ -14,15 +14,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
-import com.github.msbaek.rxessentials.common.rx.RxBus;
 import com.github.msbaek.rxessentials.common.view.BaseFragment;
 import com.github.msbaek.rxessentials.common.view.EndlessRecyclerOnScrollListener;
 import com.github.msbaek.rxessentials.di.UserComponent;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
-import com.github.msbaek.rxessentials.user.domain.event.OpenProfileEvent;
-import rx.Subscription;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -37,9 +34,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
     private UserListAdapter recyclerViewAdapter;
     @Inject
     UserListPresenter presenter;
-    @Inject
-    RxBus rxBus;
-    private Subscription subscribe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,12 +46,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_list, container, false);
         ButterKnife.inject(this, view);
-        subscribe = rxBus.toObserverable().subscribe(o -> {
-            if (o instanceof OpenProfileEvent) {
-                OpenProfileEvent event = (OpenProfileEvent) o;
-                presenter.openProfile(event.user);
-            }
-        });
         return view;
     }
 
@@ -67,6 +55,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
         initAdapter();
         initRecyclerView();
+        recyclerViewAdapter.onItemClick(user ->  presenter.openProfile(user));
         initSwipe();
 
         presenter.setView(this);
@@ -79,7 +68,6 @@ public class UserListFragment extends BaseFragment implements UserListView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-        subscribe.unsubscribe();
     }
 
     @Override
