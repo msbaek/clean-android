@@ -14,8 +14,10 @@ import com.github.msbaek.rxessentials.user.domain.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import rx.Observer;
 import rx.Subscription;
+import rx.android.view.OnClickEvent;
 import rx.android.view.ViewObservable;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.observers.Observers;
 import rx.observers.Subscribers;
 
@@ -94,7 +96,17 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            subscribe = ViewObservable.clicks(mView).map(onClickEvent -> user).subscribe(clickObserver);
+            subscribe = ViewObservable.clicks(mView).map(new Func1<OnClickEvent, Object>() {
+                @Override
+                public Object call(OnClickEvent onClickEvent) {
+                    return user;
+                }
+            }).subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    clickObserver.onNext((User) o);
+                }
+            });
         }
 
         public void recycled() {

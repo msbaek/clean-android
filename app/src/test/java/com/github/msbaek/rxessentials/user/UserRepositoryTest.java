@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 @RunWith(RobolectricTestRunner.class)
 public class UserRepositoryTest {
@@ -27,9 +29,19 @@ public class UserRepositoryTest {
         final List<User> results = new ArrayList<>();
 
         Observable<List<User>> users = mUserRepository.getMostPopularSOusers(1) //
-                .map(UsersResponse::getUsers);
+        .map(new Func1<UsersResponse, List<User>>() {
+            @Override
+            public List<User> call(UsersResponse usersResponse) {
+                return usersResponse.getUsers();
+            }
+        });
 
-        users.toBlocking().forEach(results::addAll);
+        users.toBlocking().forEach(new Action1<List<User>>() {
+            @Override
+            public void call(List<User> users) {
+                results.addAll(users);
+            }
+        });
 
         System.out.printf("result's size=%d\n", results.size());
         for (User result : results) {
