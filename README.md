@@ -15,6 +15,8 @@
 
 ![](images/Architecture.png)
 
+- 정정1 RxBus는 Domain이 아니라 View 영역에 존재
+
 view, domain, data로 레이어가 나눠지고, 모든 소스 코드의 의존성은 domain을 향한다.
 
 - User List Loading
