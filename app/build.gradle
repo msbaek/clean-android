@@ -15,7 +15,6 @@ buildscript {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
-		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 	}
 }
 
@@ -26,7 +25,6 @@ repositories {
 
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -86,13 +84,13 @@ dependencies {
 	compile 'com.squareup.retrofit2:converter-gson:2.0.1'
 	compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
 
-
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 	compile 'com.squareup.okhttp:okhttp:2.0.0'
 
 	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 
-	compile 'com.jakewharton:butterknife:6.0.0'
+	compile 'com.jakewharton:butterknife:8.0.1'
+	kapt 'com.jakewharton:butterknife-compiler:8.0.1'
 
 	compile 'io.reactivex:rxandroid:0.24.0'
 	compile 'io.reactivex:rxjava-joins:0.22.0'
