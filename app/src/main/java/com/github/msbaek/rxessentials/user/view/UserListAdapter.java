@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -70,19 +71,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final View mView;
-        @InjectView(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @InjectView(R.id.city)
+        @BindView(R.id.city)
         TextView city;
-        @InjectView(R.id.reputation)
+        @BindView(R.id.reputation)
         TextView reputation;
-        @InjectView(R.id.user_image)
+        @BindView(R.id.user_image)
         ImageView userImage;
         private Subscription subscribe = Subscribers.empty();
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
             mView = view;
         }
 
