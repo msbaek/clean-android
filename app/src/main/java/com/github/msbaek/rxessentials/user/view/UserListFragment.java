@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.functions.Action1;
 
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
@@ -59,7 +60,12 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
         initAdapter();
         initRecyclerView();
-        recyclerViewAdapter.onItemClick(user ->  presenter.openProfile(user));
+        recyclerViewAdapter.onItemClick(new Action1<User>() {
+            @Override
+            public void call(User user) {
+                presenter.openProfile(user);
+            }
+        });
         initSwipe();
 
         presenter.setView(this);
@@ -93,7 +99,12 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void initSwipe() {
-        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                doRefresh();
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -111,7 +122,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void initAdapter() {
-        recyclerViewAdapter = new UserListAdapter(new ArrayList<>());
+        recyclerViewAdapter = new UserListAdapter(new ArrayList<User>());
     }
 
     private void refreshList() {
@@ -136,7 +147,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
         startActivity(i);
     }
 
-    public void onRefresh() {
+    public void doRefresh() {
         refreshList();
     }
 }

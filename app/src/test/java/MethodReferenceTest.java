@@ -11,7 +11,7 @@ public class MethodReferenceTest {
 
     @Test
     public void pass_methodReference_for_sam() throws Exception {
-        doIt(this::method_instead_of_interface_impl);
+//        doIt(this::method_instead_of_interface_impl);
         // works if interface is SAM(functional interface)
     }
 

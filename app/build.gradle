@@ -1,5 +1,4 @@
 buildscript {
-	ext.retrolambda_version='3.2.5'
 	ext.gradle_version='2.1.0'
 	ext.android_support_version='23.3.0'
 	ext.gson_version='2.3'
@@ -14,7 +13,6 @@ buildscript {
 		classpath "com.android.tools.build:gradle:$gradle_version"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
 	}
 }
 
@@ -23,7 +21,6 @@ repositories {
 	maven { url "https://github.com/alter-ego/advanced-android-logger/raw/develop/releases/" }
 }
 
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -45,20 +42,12 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
 	lintOptions {
 		disable 'InvalidPackage'
 		abortOnError false
 	}
 	packagingOptions {
 		exclude 'META-INF/services/javax.annotation.processing.Processor'
-	}
-	compileOptions {
-		targetCompatibility 1.8
-		sourceCompatibility 1.8
 	}
 }
 
