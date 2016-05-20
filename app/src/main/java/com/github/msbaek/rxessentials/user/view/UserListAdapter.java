@@ -6,19 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.common.rx.RxBus;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.event.OpenProfileEvent;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import rx.Subscription;
+import rx.android.view.ViewObservable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.android.view.ViewObservable;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private List<User> mUsers = new ArrayList<>();
@@ -47,6 +47,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     }
 
     @Override
+    public void onViewRecycled(ViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.subscribe.unsubscribe();
+    }
+
+    @Override
     public int getItemCount() {
         return mUsers == null ? 0 : mUsers.size();
     }
@@ -61,6 +67,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         TextView reputation;
         @InjectView(R.id.user_image)
         ImageView userImage;
+        private Subscription subscribe;
 
         public ViewHolder(View view) {
             super(view);
@@ -75,12 +82,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            ViewObservable.clicks(mView) //
-                    .subscribe(
-                            onClickEvent -> {
-                                RxBus.getInstance().send(new OpenProfileEvent(user));
-                            }
-                    );
+            subscribe = ViewObservable.clicks(mView) //
+                    .subscribe(onClickEvent -> {
+                        App.L.info("click! " + user.getDisplayName());
+                        RxBus.getInstance().send(new OpenProfileEvent(user));
+                    });
         }
     }
 }

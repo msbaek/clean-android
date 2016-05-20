@@ -10,7 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.common.rx.RxBus;
@@ -21,14 +22,11 @@ import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
 import com.github.msbaek.rxessentials.user.domain.event.OpenProfileEvent;
-
-import java.util.ArrayList;
-import java.util.List;
+import rx.Subscription;
 
 import javax.inject.Inject;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserListFragment extends BaseFragment implements UserListView {
     @InjectView(R.id.recyclerview)
@@ -41,6 +39,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     UserListPresenter presenter;
     @Inject
     RxBus rxBus;
+    private Subscription subscribe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,15 +52,12 @@ public class UserListFragment extends BaseFragment implements UserListView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_list, container, false);
         ButterKnife.inject(this, view);
-
-        rxBus.toObserverable().subscribe(
-                o -> {
-                    if (o instanceof OpenProfileEvent) {
-                        OpenProfileEvent event = (OpenProfileEvent) o;
-                        presenter.openProfile(event.user);
-                    }
-                }
-        );
+        subscribe = rxBus.toObserverable().subscribe(o -> {
+            if (o instanceof OpenProfileEvent) {
+                OpenProfileEvent event = (OpenProfileEvent) o;
+                presenter.openProfile(event.user);
+            }
+        });
         return view;
     }
 
@@ -83,6 +79,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+        subscribe.unsubscribe();
     }
 
     @Override
