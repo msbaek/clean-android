@@ -22,7 +22,6 @@ import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
 import rx.Subscription;
-import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -61,12 +60,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
         initAdapter();
         initRecyclerView();
 
-        subscription = recyclerViewAdapter.onItemClick(new Action1<User>() {
-            @Override
-            public void call(User user) {
-                presenter.openProfile(user);
-            }
-        });
+        subscription = recyclerViewAdapter.onItemClick(user -> presenter.openProfile(user));
         initSwipe();
 
         presenter.setView(this);
@@ -101,12 +95,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void initSwipe() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                doRefresh();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
     }
 
     private void initRecyclerView() {

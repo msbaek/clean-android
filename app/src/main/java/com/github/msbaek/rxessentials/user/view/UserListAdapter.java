@@ -73,9 +73,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         TextView reputation;
         @BindView(R.id.user_image)
         ImageView userImage;
+        private View view;
 
         public ViewHolder(View view) {
             super(view);
+            this.view = view;
             ButterKnife.bind(this, view);
         }
 
@@ -86,7 +88,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            clickObserver.onNext(user);
+            view.setOnClickListener(l -> clickObserver.onNext(user));
         }
     }
 }

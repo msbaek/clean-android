@@ -3,9 +3,10 @@ buildscript {
 	ext.android_support_version='23.3.0'
 	ext.kotlin_version = '1.0.2'
 	ext.anko_version = '0.8.2'
+	ext.retrolambda_version='3.2.5'
 
 	repositories {
-		mavenCentral()
+		jcenter()
 	}
 
 	dependencies {
@@ -13,6 +14,7 @@ buildscript {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
 	}
 }
 
@@ -21,6 +23,7 @@ repositories {
 	maven { url "https://github.com/alter-ego/advanced-android-logger/raw/develop/releases/" }
 }
 
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -42,6 +45,10 @@ android {
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
 	}
 	lintOptions {
 		disable 'InvalidPackage'
