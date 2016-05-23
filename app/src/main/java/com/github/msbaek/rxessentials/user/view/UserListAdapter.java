@@ -6,27 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import rx.Observer;
 import rx.Subscription;
-import rx.android.view.OnClickEvent;
-import rx.android.view.ViewObservable;
 import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observers.Observers;
-import rx.observers.Subscribers;
+import rx.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private List<User> mUsers = new ArrayList<>();
-    private Observer<User> clickObserver = Observers.empty();
+    private PublishSubject<User> clickObserver = PublishSubject.create();
 
     public UserListAdapter(List<User> users) {
         mUsers = users;
@@ -54,7 +48,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     @Override
     public void onViewRecycled(ViewHolder holder) {
         super.onViewRecycled(holder);
-        holder.recycled();
     }
 
     @Override
@@ -67,12 +60,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         super.onDetachedFromRecyclerView(recyclerView);
     }
 
-    public void onItemClick(final Action1<User> clickAction) {
-        this.clickObserver = Observers.create(clickAction);
+    public Subscription onItemClick(final Action1<User> clickAction) {
+        return this.clickObserver.subscribe(clickAction);
     }
     
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final View mView;
         @BindView(R.id.name)
         TextView name;
         @BindView(R.id.city)
@@ -81,12 +73,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         TextView reputation;
         @BindView(R.id.user_image)
         ImageView userImage;
-        private Subscription subscribe = Subscribers.empty();
+        private View view;
 
         public ViewHolder(View view) {
             super(view);
+            this.view = view;
             ButterKnife.bind(this, view);
-            mView = view;
         }
 
         public void setUser(final User user) {
@@ -96,21 +88,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
             ImageLoader.getInstance().displayImage(user.getProfileImage(), userImage);
 
-            subscribe = ViewObservable.clicks(mView).map(new Func1<OnClickEvent, Object>() {
-                @Override
-                public Object call(OnClickEvent onClickEvent) {
-                    return user;
-                }
-            }).subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    clickObserver.onNext((User) o);
-                }
-            });
-        }
-
-        public void recycled() {
-            subscribe.unsubscribe();
+            view.setOnClickListener(l -> clickObserver.onNext(user));
         }
     }
 }
