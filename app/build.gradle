@@ -1,9 +1,7 @@
 buildscript {
-	ext.retrolambda_version='3.2.5'
 	ext.gradle_version='2.1.0'
 	ext.android_support_version='23.3.0'
-	ext.gson_version='2.3'
-	ext.kotlin_version = '1.0.1-2'
+	ext.kotlin_version = '1.0.2'
 	ext.anko_version = '0.8.2'
 
 	repositories {
@@ -14,7 +12,7 @@ buildscript {
 		classpath "com.android.tools.build:gradle:$gradle_version"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-		classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
+		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 	}
 }
 
@@ -26,6 +24,7 @@ repositories {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
 	compileSdkVersion 23
@@ -55,45 +54,43 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
+	//Android basic dependencies
 	compile "com.android.support:support-v4:$android_support_version"
 	compile "com.android.support:appcompat-v7:$android_support_version"
 	compile "com.android.support:design:$android_support_version"
 	compile "com.android.support:recyclerview-v7:$android_support_version"
 	compile "com.android.support:cardview-v7:$android_support_version"
 
-	compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
-
-	compile 'org.projectlombok:lombok:1.14.8'
-
-	compile 'com.google.guava:guava:18.0'
-	compile "com.google.code.gson:gson:$gson_version"
-
-	compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-	compile 'com.github.rey5137:material:1.0.0'
-
-	compile 'com.squareup.retrofit2:retrofit:2.0.2'
-	compile 'com.squareup.retrofit2:converter-gson:2.0.1'
-	compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-	compile 'com.squareup.okhttp:okhttp:2.0.0'
-
-	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-
-	compile 'com.jakewharton:butterknife:8.0.1'
-	kapt 'com.jakewharton:butterknife-compiler:8.0.1'
-
-	compile 'io.reactivex:rxandroid:0.24.0'
-	compile 'io.reactivex:rxjava-joins:0.22.0'
-
-	kapt 'com.google.dagger:dagger-compiler:2.2'
-	compile 'com.google.dagger:dagger:2.2'
-	provided 'javax.annotation:jsr250-api:1.0'
-
+	// Kotlin dependencies
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 	compile "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
 	compile "org.jetbrains.anko:anko-common:$anko_version"
 	compile "org.jetbrains.anko:anko-sqlite:$anko_version"
+	
+	//Networking dependencies
+	compile 'com.squareup.retrofit2:retrofit:2.0.2'
+	compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+	compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
+	//Rx dependencies
+	compile 'io.reactivex:rxandroid:1.2.0'
+	compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+	compile 'io.reactivex:rxjava-joins:0.22.0'
+
+	//DI dependencies
+	apt 'com.google.dagger:dagger-compiler:2.2'
+	compile 'com.google.dagger:dagger:2.2'
+	provided 'javax.annotation:jsr250-api:1.0'
+	compile 'com.jakewharton:butterknife:8.0.1'
+	apt 'com.jakewharton:butterknife-compiler:8.0.1'
+
+	//Image&View dependencies
+	compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+	compile 'com.github.rey5137:material:1.0.0'
+	compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+	
+	compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
+	compile 'org.projectlombok:lombok:1.14.8'
 
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.robolectric:robolectric:3.0'
