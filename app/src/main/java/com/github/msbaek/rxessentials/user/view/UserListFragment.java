@@ -10,12 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.functions.Action1;
-
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.R;
 import com.github.msbaek.rxessentials.common.view.BaseFragment;
@@ -24,6 +21,8 @@ import com.github.msbaek.rxessentials.di.UserComponent;
 import com.github.msbaek.rxessentials.user.domain.User;
 import com.github.msbaek.rxessentials.user.domain.UserListPresenter;
 import com.github.msbaek.rxessentials.user.domain.UserListView;
+import rx.Subscription;
+import rx.functions.Action1;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     @Inject
     UserListPresenter presenter;
     private Unbinder unbinder;
+    private Subscription subscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,8 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
         initAdapter();
         initRecyclerView();
-        recyclerViewAdapter.onItemClick(new Action1<User>() {
+
+        subscription = recyclerViewAdapter.onItemClick(new Action1<User>() {
             @Override
             public void call(User user) {
                 presenter.openProfile(user);
@@ -84,6 +85,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     public void onDestroy() {
         super.onDestroy();
         presenter.destroy();
+        subscription.unsubscribe();
     }
 
     @Override
