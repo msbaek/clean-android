@@ -250,6 +250,7 @@ View와 Presenter가 1:1로 매핑되기 어려운 경우가 존재
 ### Rx
 
 [Daum영화 RxJS 적용사례](https://kakao.agit.in/g/52979/wall/304568188)
+[Grokking RxJava](http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
 
 ### Dagger2
 - [Dependency Injection with Dagger 2](https://guides.codepath.com/android/Dependency-Injection-with-Dagger-2) 이 글이 dagger2를 처음 본다면 더 좋은 글일 듯
