@@ -3,9 +3,10 @@
 이 예제는 [RxJava Essentials](https://www.packtpub.com/application-development/rxjava-essentials) 나오는 예제에
 
 - retrolambda
-- dagger2
 - butterknife
 - retrofit2
+- rxjava
+- dagger2
 - mvp
 - robolectric
 - kotlin(?)
@@ -250,6 +251,7 @@ View와 Presenter가 1:1로 매핑되기 어려운 경우가 존재
 ### Rx
 
 [Daum영화 RxJS 적용사례](https://kakao.agit.in/g/52979/wall/304568188)
+
 [Grokking RxJava](http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
 
 ### Dagger2
@@ -260,4 +262,16 @@ View와 Presenter가 1:1로 매핑되기 어려운 경우가 존재
 - [Architecting Android…The clean way?](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/#_jmp0_)
 - [Architecting Android…The evolution](http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/)
 - [Android Application Architecture — ribot labs](http://wiki.daumkakao.com/pages/viewpage.action?pageId=366847933)
+	- 초기
+		- view layer가 너무 많은 책임을 갖는다. activity, fragment가 너무 커져서 유지하기 어려워진다.
+		- callback hell. 너무 많은 중첩된 콜백은 코드를 더럽히고 이해하가 어렵게하고, 새로운 기능 추가나 변경을 너무나 어렵게 한다.
+		- 단위 테스트가 어려워진다.
+	- RxJava 적용.
+		- nested callback 제거
+	- MVP
+		- view가 경량화됨. UI 갱신/이벤트 처리. 2가지 일만. 유지보수 용이해짐
+        - view를 mocking함으로써 presenter unit test 가능.
 - [STINSON'S PLAYBOOK FOR MOSBY - 정리 중](http://wiki.daumkakao.com/display/CommunityDev1/STINSON%27S+PLAYBOOK+FOR+MOSBY)
+
+
+### 논의 아지트: https://kakao.agit.in/g/300000420/wall/304623314
