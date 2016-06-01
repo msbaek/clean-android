@@ -63,7 +63,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
         subscription = recyclerViewAdapter.onItemClick(user -> presenter.openProfile(user));
         initSwipe();
 
-        presenter.setView(this);
+        presenter.viewCreated(this);
 
         if (savedInstanceState == null)
             refreshList();
@@ -105,15 +105,15 @@ public class UserListFragment extends BaseFragment implements UserListView {
         recyclerView.clearOnScrollListeners();
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
-            public void onLoadMore(int current_page) {
-                presenter.loadUserList(current_page);
+            public void onLoadMore() {
+                presenter.loadUserList();
             }
         });
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     private void initAdapter() {
-        recyclerViewAdapter = new UserListAdapter(new ArrayList<User>());
+        recyclerViewAdapter = new UserListAdapter(new ArrayList<>());
     }
 
     private void refreshList() {

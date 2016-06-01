@@ -1,5 +1,6 @@
 package com.github.msbaek.rxessentials.common.mvp;
 
+import com.github.msbaek.rxessentials.App;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -7,13 +8,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
-public abstract class UseCase<T extends UseCaseRequest, R> {
+public abstract class UseCase<T> {
     private Subscription subscription = Subscriptions.empty();
 
-    protected abstract Observable<R> getObservable(T request);
+    protected abstract Observable<T> buildUseCaseObservable();
 
-    public void execute(T request, Subscriber<R> useCaseSubscriber) {
-        this.subscription = this.getObservable(request)
+    public void execute(Subscriber<T> useCaseSubscriber) {
+        this.subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(useCaseSubscriber);
