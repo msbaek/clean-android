@@ -95,7 +95,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void initSwipe() {
-        swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
+        swipeRefreshLayout.setOnRefreshListener(this::refreshList);
     }
 
     private void initRecyclerView() {
@@ -117,6 +117,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     }
 
     private void refreshList() {
+        recyclerViewAdapter.resetUsers();
         presenter.initialize();
     }
 
@@ -136,9 +137,5 @@ public class UserListFragment extends BaseFragment implements UserListView {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
-    }
-
-    public void doRefresh() {
-        refreshList();
     }
 }

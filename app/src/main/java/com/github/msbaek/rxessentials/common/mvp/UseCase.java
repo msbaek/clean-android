@@ -1,6 +1,5 @@
 package com.github.msbaek.rxessentials.common.mvp;
 
-import com.github.msbaek.rxessentials.App;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

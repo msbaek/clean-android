@@ -42,7 +42,7 @@ public class UserListPresenter implements Presenter {
     }
 
     public void initialize() {
-        this.loadUserList();
+        useCase.initialize();
     }
 
     public void loadUserList() {

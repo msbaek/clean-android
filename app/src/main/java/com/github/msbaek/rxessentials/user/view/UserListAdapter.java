@@ -30,7 +30,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         mUsers.addAll(users);
         notifyDataSetChanged();
     }
-
+    public void resetUsers() {
+        mUsers.clear();
+    }
+    
     @Override
     public UserListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.so_list_item, parent, false);

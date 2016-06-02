@@ -32,4 +32,9 @@ public class GetUserList extends UseCase<List<User>> {
     public void next() {
         publishSubject.onNext(nextPage(page++));
     }
+
+    public void initialize() {
+        page = 1;
+        next();
+    }
 }
