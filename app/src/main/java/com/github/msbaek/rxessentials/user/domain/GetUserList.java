@@ -1,14 +1,18 @@
 package com.github.msbaek.rxessentials.user.domain;
 
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import com.github.msbaek.rxessentials.common.mvp.UseCase;
 import rx.Observable;
-import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class GetUserList extends UseCase<UserListRequest, List<User>> {
+public class GetUserList extends UseCase<List<User>> {
     private UserRepository userRepository;
+    private PublishSubject<Observable<List<User>>> publishSubject = PublishSubject.create();
+    private int page = 1;
 
     @Inject
     public GetUserList(UserRepository userRepository) {
@@ -16,12 +20,21 @@ public class GetUserList extends UseCase<UserListRequest, List<User>> {
     }
 
     @Override
-    protected Observable<List<User>> getObservable(UserListRequest request) {
-        return userRepository.getMostPopularSOusers(request.pageNo).map(new Func1<UsersResponse, List<User>>() {
-            @Override
-            public List<User> call(UsersResponse usersResponse) {
-                return usersResponse.getUsers();
-            }
-        });
+    @RxLogObservable
+    protected Observable<List<User>> buildUseCaseObservable() {
+        return Observable.switchOnNext(publishSubject);
+    }
+    @RxLogObservable
+    private Observable<List<User>> nextPage(Integer pageNo) {
+        return userRepository.getMostPopularSOusers(pageNo).map(UsersResponse::getUsers).subscribeOn(Schedulers.io());
+    }
+
+    public void next() {
+        publishSubject.onNext(nextPage(page++));
+    }
+
+    public void initialize() {
+        page = 1;
+        next();
     }
 }

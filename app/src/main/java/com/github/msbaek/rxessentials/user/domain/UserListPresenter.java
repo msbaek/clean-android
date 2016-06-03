@@ -1,8 +1,8 @@
 package com.github.msbaek.rxessentials.user.domain;
 
+import com.fernandocejas.frodo.annotation.RxLogSubscriber;
 import com.github.msbaek.rxessentials.App;
 import com.github.msbaek.rxessentials.common.mvp.Presenter;
-import com.github.msbaek.rxessentials.common.mvp.UseCase;
 import com.github.msbaek.rxessentials.common.rx.DefaultSubscriber;
 import com.github.msbaek.rxessentials.di.PerActivity;
 
@@ -16,7 +16,7 @@ public class UserListPresenter implements Presenter {
 
     @Inject
     @Named("getUserList")
-    UseCase<UserListRequest, List<User>> useCase;
+    GetUserList useCase;
 
     @Inject
     public UserListPresenter() {
@@ -36,16 +36,17 @@ public class UserListPresenter implements Presenter {
         view = null;
     }
 
-    public void setView(UserListView view) {
+    public void viewCreated(UserListView view) {
         this.view = view;
+        useCase.execute(new GetUserListSubscriber());
     }
 
     public void initialize() {
-        this.loadUserList(1);
+        useCase.initialize();
     }
 
-    public void loadUserList(int pageNo) {
-        useCase.execute(new UserListRequest(pageNo), new GetUserListSubscriber());
+    public void loadUserList() {
+        useCase.next();
     }
 
     public void openProfile(User user) {
@@ -57,6 +58,7 @@ public class UserListPresenter implements Presenter {
         }
     }
 
+    @RxLogSubscriber
     private class GetUserListSubscriber extends DefaultSubscriber<List<User>> {
         @Override
         public void onError(Throwable e) {
